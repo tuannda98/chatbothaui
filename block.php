@@ -76,8 +76,8 @@ function outchat($userid) {
   mysqli_query($conn, "UPDATE `users` SET `trangthai` = 0, `ketnoi` = NULL, `hangcho` = 0 WHERE `ID` = $partner");
   mysqli_query($conn, "INSERT INTO `block` (idBlock, idBlocked) VALUES ($userid, $partner) ");
   mysqli_query($conn, "INSERT INTO `block` (idBlock, idBlocked) VALUES ($partner, $userid) ");
-  sendchat($userid,"💔 Cá đã bị block ! Để tiếp tục thả câu hãy gõ 'Start'");
-  endchat($partner,"💔 Cá đã block bạn ! Để tiếp tục thả câu hãy gõ 'Start'");
+  sendchat($userid,"💔 Đối phương đã bị block ! Để tiếp tục chat hãy gõ 'Start'");
+  endchat($partner,"💔 Đối phương đã block bạn ! Để tiếp tục chat hãy gõ 'Start'");
 }
 
 

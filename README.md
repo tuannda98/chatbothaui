@@ -4,8 +4,8 @@ Link youtube: https://youtu.be/oqiJQQjfOas
 
 + Công cụ cần thiết
 	- Hosting Php + Mysql ( https://heroku.com ) (Các bạn đăng kí tài khoản trên heroku nhé)
-	- Source Code ( https://github.com/Hungs20/ChatBot/ )
-	- Fanpage ( https://www.facebook.com/cvhungs20/ )
+	- Source Code ( https://github.com/tuannda98/chatbothaui/ )
+	- Fanpage ( https://www.facebook.com/botchathaui/ )
 	- Chatfuel ( chatfuel.com ) (Các bạn đăng kí tài khoản chatfuel nhé)
 	- Github + git (Các bạn đăng kí tài khoản trên github nhé)
 + Cài đặt code + data

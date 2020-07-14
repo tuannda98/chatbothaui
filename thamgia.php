@@ -107,7 +107,7 @@ function ketnoi($userid,$gioitinh) { //tìm người chát
           "elements":[
             {
               "title":"Đang thả câu...",
-              "subtitle":"Đợi xíu BOT đang tìm một cá nữ cho bạn (👩)"
+              "subtitle":"Đợi xíu BOT đang tìm một bạn nữ cho bạn (👩)"
             }
           ]
         }
@@ -127,7 +127,7 @@ function ketnoi($userid,$gioitinh) { //tìm người chát
           "elements":[
             {
               "title":"Đang thả câu...",
-              "subtitle":"Đợi xíu BOT đang tìm một cá nam cho bạn (👱)"
+              "subtitle":"Đợi xíu BOT đang tìm một bạn nam cho bạn (👱)"
             }
           ]
         }
@@ -147,7 +147,7 @@ function ketnoi($userid,$gioitinh) { //tìm người chát
           "elements":[
             {
               "title":"Đang thả câu...",
-              "subtitle":"Đợi xíu BOT đang tìm một cá ẩn giới tính giống bạn (👤)"
+              "subtitle":"Đợi xíu BOT đang tìm một bạn ẩn giới tính giống bạn (👤)"
             }
           ]
         }
@@ -159,14 +159,14 @@ function ketnoi($userid,$gioitinh) { //tìm người chát
 } else {  // neu co nguoi trong hàng chờ
     addketnoi($userid, $partner);
 	if($gioitinh == "male"){
-	sendchat($userid,"✅ Bạn đã được kết nối với một cá nữ (👩)");  
-	sendchat($partner,"✅ Bạn đã được kết nối với một cá nam (👱)");  
+	sendchat($userid,"✅ Bạn đã được kết nối với một bạn nữ (👩)");  
+	sendchat($partner,"✅ Bạn đã được kết nối với một bạn nam (👱)");  
 	}else if($gioitinh == "female"){
-	sendchat($partner,"✅ Bạn đã được kết nối với một cá nữ (👩)");  
-	sendchat($userid,"✅ Bạn đã được kết nối với một cá nam (👱)"); 	
+	sendchat($partner,"✅ Bạn đã được kết nối với một bạn nữ (👩)");  
+	sendchat($userid,"✅ Bạn đã được kết nối với một bạn nam (👱)"); 	
 	}else{
-	sendchat($partner,"✅ Bạn đã được kết nối với một cá lạ(👤)");  
-	sendchat($userid,"✅ Bạn đã được kết nối với một cá lạ(👤)"); 	
+	sendchat($partner,"✅ Bạn đã được kết nối với một bạn lạ(👤)");  
+	sendchat($userid,"✅ Bạn đã được kết nối với một bạn lạ(👤)"); 	
 	}
   
   }
