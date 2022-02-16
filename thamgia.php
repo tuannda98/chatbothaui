@@ -1,10 +1,9 @@
 
 <?php
-$ID = $_POST['ID']; // lấy id từ chatfuel
-$gioitinh = $_POST['gt'];// lấy giới tính
-
 require_once 'config.php'; //lấy thông tin từ config
 $conn = mysqli_connect($DBHOST, $DBUSER, $DBPW, $DBNAME); // kết nối data
+$ID = $_POST['ID']; // lấy id từ chatfuel
+$gioitinh = $_POST['gt'];// lấy giới tính
 ////// Hàm Gửi JSON //////////
 
 function request($userid,$jsondata) { 
