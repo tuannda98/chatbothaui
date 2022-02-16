@@ -35,13 +35,13 @@ function request($userid,$jsondata) {
   ]
 } ';
 	if (curl_errno($ch)) {
-		echo errorChat;
+		echo $errorChat;
 	} else {
 		$resultStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 		if ($resultStatus == 200) {
 			// send ok
 		} else {
-			echo errorChat;
+			echo $errorChat;
 		}
 	}
 	curl_close($ch);
