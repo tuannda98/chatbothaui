@@ -74,7 +74,8 @@ function requestText($userid,$jsondata) { // hàm gửi chát :)))
 }
 
 $partner = getRelationship($id);
-
+$logString = $id."-".$partner."-".$noidung;
+mysqli_query($conn,"INSERT INTO `logs` (`log`) VALUES ($logString)" )
 if($partner){
 sendchat($partner,$noidung);
 }else{
