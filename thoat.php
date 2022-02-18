@@ -74,6 +74,7 @@ function outchat($userid) {
   $partner = getRelationship($userid);
   mysqli_query($conn, "UPDATE `users` SET `trangthai` = 0, `ketnoi` = NULL, `hangcho` = 0 WHERE `ID` = $userid");
   mysqli_query($conn, "UPDATE `users` SET `trangthai` = 0, `ketnoi` = NULL, `hangcho` = 0 WHERE `ID` = $partner");
+  mysqli_query($conn, "UPDATE `logs` SET `is_end` = 1 WHERE `is_end` = 0 AND ((`partner1` = $userid AND `partner2` = $partner) OR (`partner1` = $partner AND `partner2` = $userid))");
   sendchat($userid,"💔 Bạn đã thoát ! Để tiếp tục hãy gõ 'Start'");
   endchat($partner,"💔 Người lạ đã thoát ! Để tiếp tục hãy gõ 'Start'");
 }

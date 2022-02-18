@@ -152,6 +152,7 @@ function ketnoi($userid,$gioitinh) { //tìm người chát
 } 
 else {  // neu co nguoi trong hàng chờ
     addketnoi($userid, $partner);
+    mysqli_query($conn,"INSERT INTO `logs` (`partner1`, `partner2`) VALUES (".$userid.", ".$partner.")" );
     echo $userid. " ---------------- " .$partner;
 	  sendchat($partner,"✅ Bạn đã được kết nối với một người lạ");  
 	  sendchat($userid,"✅ Bạn đã được kết nối với một người lạ"); 	
@@ -215,7 +216,7 @@ else {
             "elements":[
               {
                 "title":"Cảnh báo",
-                "subtitle":"Bạn đang được kết nối rồi ! Hãy gõ \'thoat\' để thoát"
+                "subtitle":"Bạn đang được kết nối rồi ! Hãy gõ \'End\' để thoát"
               }
             ]
           }

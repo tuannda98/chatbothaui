@@ -2,4 +2,4 @@
 
 #### Nền tảng kết nối với facebook: Smaxbot
 
-#### Link fanpage: https://www.facebook.com/hqchatbotv3
+#### Link fanpage: https://www.facebook.com/botchathaui

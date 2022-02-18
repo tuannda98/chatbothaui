@@ -13,8 +13,7 @@
 		while($row = mysqli_fetch_assoc($result)) {
 			$like++;
 			if($row['trangthai'] == 1) $connected++;
-			else
-				{
+			else {
 				if($row['gioitinh'] == 1) $male++;
 				if($row['gioitinh'] == 2) $female++;
 				if($row['gioitinh'] == 0) $other++;
@@ -24,12 +23,11 @@
 ?>
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <title>Hồng Quang ChatBot</title>
+    <title>HaUI ChatBot</title>
     <!-- Favicon-->
     <link rel="icon" href="favicon.ico" type="image/x-icon">
 
@@ -283,13 +281,6 @@
 
     <!-- Sparkline Chart Plugin Js -->
     <script src="plugins/jquery-sparkline/jquery.sparkline.js"></script>
-
-    <!-- Custom Js -->
-    <script src="js/admin.js"></script>
-    <script src="js/pages/index.js"></script>
-
-    <!-- Demo Js -->
-    <script src="js/demo.js"></script>
 	<script>
 
 function initDonutChart() {
