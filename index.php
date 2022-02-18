@@ -29,7 +29,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <title>Welcome To HaUI ChatBot</title>
+    <title>Hồng Quang ChatBot</title>
     <!-- Favicon-->
     <link rel="icon" href="favicon.ico" type="image/x-icon">
 
@@ -84,7 +84,7 @@
             <div class="navbar-header">
                 <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></a>
                 <a href="javascript:void(0);" class="bars"></a>
-                <a class="navbar-brand" href="index.html">HAUI CHATBOT</a>
+                <a class="navbar-brand" href="index.html">Hồng Quang Chatbot</a>
             </div>
             
         </div>
@@ -99,14 +99,10 @@
                     <img src="images/user.jpg" width="48" height="48" alt="User" />
                 </div>
                 <div class="info-container">
-                    <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">HAUI ChatBot</div>
+                    <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Hồng Quang ChatBot</div>
                     <div class="btn-group user-helper-dropdown">
                         <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
-                        <ul class="dropdown-menu pull-right">
-                            <li><a href="https://www.facebook.com/BotChatHaui"><i class="material-icons">person</i>Fanpage</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="https://m.me/BotChatHaui"><i class="material-icons">message</i>Inbox</a></li>
-                        </ul>
+                        
                     </div>
                 </div>
             </div>
@@ -125,17 +121,7 @@
                 </ul>
             </div>
             <!-- #Menu -->
-            <!-- Footer -->
-            <div class="legal">
-                <div class="copyright">
-                    &copy; 2018 - 20xx <a href="https://www.facebook.com/BotChatHaui">HAUI CHATBOT</a>.
-                </div>
-                <div class="version">
-                    <b>Version: </b> 1.0.0
-                </div>
-            </div>
-            <!-- #Footer -->
-        </aside>
+         </aside>
         <!-- #END# Left Sidebar -->
     </section>
 
@@ -259,17 +245,7 @@
                 </div>
                 <!-- #END# Browser Usage -->
             </div>
-			<div class="row clearfix">
-				<div id="fb-root"></div>
-				<script>(function(d, s, id) {
-				  var js, fjs = d.getElementsByTagName(s)[0];
-				  if (d.getElementById(id)) return;
-				  js = d.createElement(s); js.id = id;
-				  js.src = 'https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v3.1&appId=266578183986233&autoLogAppEvents=1';
-				  fjs.parentNode.insertBefore(js, fjs);
-				}(document, 'script', 'facebook-jssdk'));</script>
-				<div class="fb-page" data-href="https://www.facebook.com/BotChatHaui" data-width="500" data-height="500" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/BotChatHaui" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/BotChatHaui">HaUI ChatBot</a></blockquote></div>
-			</div>
+			
         </div>
     </section>
 

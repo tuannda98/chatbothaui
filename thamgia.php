@@ -1,9 +1,10 @@
-
 <?php
 require_once 'config.php'; //lấy thông tin từ config
 $conn = mysqli_connect($DBHOST, $DBUSER, $DBPW, $DBNAME); // kết nối data
 $ID = $_POST['ID']; // lấy id từ chatfuel
 $gioitinh = $_POST['gt'];// lấy giới tính
+
+
 ////// Hàm Gửi JSON //////////
 
 function request($userid,$jsondata) { 
@@ -35,13 +36,13 @@ function request($userid,$jsondata) {
   ]
 } ';
 	if (curl_errno($ch)) {
-		echo $errorChat;
+		echo errorChat;
 	} else {
 		$resultStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 		if ($resultStatus == 200) {
 			// send ok
 		} else {
-			echo $errorChat;
+			echo errorChat;
 		}
 	}
 	curl_close($ch);
@@ -74,100 +75,86 @@ function addketnoi($user1, $user2) {
   mysqli_query($conn, "UPDATE `users` SET `trangthai` = 1, `ketnoi` = $user2, `hangcho` = 0 WHERE `ID` = $user1");
   mysqli_query($conn, "UPDATE `users` SET `trangthai` = 1, `ketnoi` = $user1, `hangcho` = 0 WHERE `ID` = $user2");
 }
+
+
+
 /////Tìm kiếm kết nối /////
 
 function ketnoi($userid,$gioitinh) { //tìm người chát 
   global $conn;
-  
-  //tìm đối tượng theo giới tính 
 
-  if($gioitinh == "female"){// nếu giới tính là nữ thì kiếm người mang giới tính nam 
-  $result = mysqli_query($conn, "SELECT `ID` FROM `users` WHERE `ID` != $userid AND `hangcho` = 1 AND `gioitinh` = 1 AND `ID` NOT IN (SELECT `idBlocked` FROM `block` WHERE `idBlock` = $userid) LIMIT 1");
-  //echo "result : " . $result."<br>";
-  }else if($gioitinh == "male"){// giới tính là nam thì tìm kiếm người là nữ
-  $result = mysqli_query($conn, "SELECT `ID` FROM `users` WHERE `ID` != $userid AND `hangcho` = 1 AND `gioitinh` = 2 AND `ID` NOT IN (SELECT `idBlocked` FROM `block` WHERE `idBlock` = $userid) LIMIT 1");
-  }else{ // không xác thì tìm kiếm người không xác định
-  $result = mysqli_query($conn, "SELECT `ID` FROM `users` WHERE `ID` != $userid AND `hangcho` = 1 AND `gioitinh` = 0 AND `ID` NOT IN (SELECT `idBlocked` FROM `block` WHERE `idBlock` = $userid) LIMIT 1");
-  }
-  //echo $result;
+  $result = mysqli_query($conn, "SELECT `ID` FROM `users` WHERE `ID` != $userid AND `hangcho` = 1 AND `ID` NOT IN (SELECT `idBlocked` FROM `block` WHERE `idBlock` = $userid) LIMIT 1");
+
   $row = mysqli_fetch_assoc($result);
   $partner = $row['ID'];
   // xử lý kiểm tra
   if ($partner == 0) { // nếu người không có ai trong hàng chờ
-  mysqli_query($conn, "UPDATE `users` SET `hangcho` = 1 WHERE `ID` = $userid"); 
+    mysqli_query($conn, "UPDATE `users` SET `hangcho` = 1 WHERE `ID` = $userid"); 
     if($gioitinh == 'male'){
      echo'{
-     "messages": [
-    {
-      "attachment":{
-        "type":"template",
-        "payload":{
-          "template_type":"generic",
-          "elements":[
-            {
-              "title":"Đang thả câu...",
-              "subtitle":"Đợi xíu BOT đang tìm một bạn nữ cho bạn (👩)"
-            }
-          ]
+      "messages": [
+      {
+        "attachment":{
+          "type":"template",
+          "payload":{
+            "template_type":"generic",
+            "elements":[
+              {
+                "title":"Đang tìm kiếm...",
+                "subtitle":"Đợi mình xíu nha, mình đang tìm một bạn nữ cho bạn 😜"
+              }
+            ]
+          }
         }
       }
-    }
-  ]
-} ';
+    ]
+  } ';
 	   
-}else if($gioitinh == 'female'){
- echo'{
- "messages": [
-    {
-      "attachment":{
-        "type":"template",
-        "payload":{
-          "template_type":"generic",
-          "elements":[
-            {
-              "title":"Đang thả câu...",
-              "subtitle":"Đợi xíu BOT đang tìm một bạn nam cho bạn (👱)"
+    }else if($gioitinh == 'female'){
+    echo'{
+    "messages": [
+        {
+          "attachment":{
+            "type":"template",
+            "payload":{
+              "template_type":"generic",
+              "elements":[
+                {
+                  "title":"Đang tìm kiếm...",
+                  "subtitle":"Đợi mình xíu nha, mình đang tìm một bạn nam cho bạn 😜"
+                }
+              ]
             }
-          ]
+          }
         }
-      }
-    }
-  ]
-}  ';
-
-}else{
-  echo'{
- "messages": [
-    {
-      "attachment":{
-        "type":"template",
-        "payload":{
-          "template_type":"generic",
-          "elements":[
-            {
-              "title":"Đang thả câu...",
-              "subtitle":"Đợi xíu BOT đang tìm một bạn ẩn giới tính giống bạn (👤)"
+      ]
+    }  ';
+    }else{
+      echo'{
+      "messages": [
+          {
+            "attachment":{
+              "type":"template",
+              "payload":{
+                "template_type":"generic",
+                "elements":[
+                  {
+                    "title":"Đang tìm kiếm...",
+                    "subtitle":"Đợi mình xíu nha 😜"
+                  }
+                ]
+              }
             }
-          ]
-        }
-      }
+          }
+        ]
+      }';	
     }
-  ]
-}';	
-}
-} else {  // neu co nguoi trong hàng chờ
+} 
+else {  // neu co nguoi trong hàng chờ
     addketnoi($userid, $partner);
-	if($gioitinh == "male"){
-	sendchat($userid,"✅ Bạn đã được kết nối với một bạn nữ (👩)");  
-	sendchat($partner,"✅ Bạn đã được kết nối với một bạn nam (👱)");  
-	}else if($gioitinh == "female"){
-	sendchat($partner,"✅ Bạn đã được kết nối với một bạn nữ (👩)");  
-	sendchat($userid,"✅ Bạn đã được kết nối với một bạn nam (👱)"); 	
-	}else{
-	sendchat($partner,"✅ Bạn đã được kết nối với một bạn lạ(👤)");  
-	sendchat($userid,"✅ Bạn đã được kết nối với một bạn lạ(👤)"); 	
-	}
-  
+    echo $userid. " ---------------- " .$partner;
+	  sendchat($partner,"✅ Bạn đã được kết nối với một người lạ");  
+	  sendchat($userid,"✅ Bạn đã được kết nối với một người lạ"); 	
   }
 }
 
@@ -187,54 +174,55 @@ function trangthai($userid) {
 
   $result = mysqli_query($conn, "SELECT `trangthai` from `users` WHERE `ID` = $userid");
   $row = mysqli_fetch_assoc($result);
-
   return intval($row['trangthai']) !== 0;
 }
 
 //// Xử lý //////
 if (!trangthai($ID)){// nếu chưa chát
-if (!hangcho($ID)) { // nếu chưa trong hàng chờ
-ketnoi($ID,$gioitinh);
-}else{
-echo'{
- "messages": [
-    {
-      "attachment":{
-        "type":"template",
-        "payload":{
-          "template_type":"generic",
-          "elements":[
-            {
-              "title":"Đang thả câu...",
-              "subtitle":"Chưa có cá nào dính thính đâu. Bạn chờ chút nhé! "
+  if (!hangcho($ID)) { // nếu chưa trong hàng chờ
+    ketnoi($ID,$gioitinh);
+  }
+  else{
+    echo'{
+    "messages": [
+        {
+          "attachment":{
+            "type":"template",
+            "payload":{
+              "template_type":"generic",
+              "elements":[
+                {
+                  "title":"Đang tìm kiếm...",
+                  "subtitle":"Có vẻ như ít người online quá :< Bạn chờ chút nhé! "
+                }
+              ]
             }
-          ]
+          }
         }
-      }
+      ]
+    }';
     }
-  ]
-}';
 }
-}else{
+else {
 // khi đang chát ! giải quyết sau !!
-echo'{
- "messages": [
-    {
-      "attachment":{
-        "type":"template",
-        "payload":{
-          "template_type":"generic",
-          "elements":[
-            {
-              "title":"Cảnh báo",
-              "subtitle":"Bạn đang được kết nối với cá rồi ! Hãy gõ \'End\' để thoát"
-            }
-          ]
+  echo'{
+  "messages": [
+      {
+        "attachment":{
+          "type":"template",
+          "payload":{
+            "template_type":"generic",
+            "elements":[
+              {
+                "title":"Cảnh báo",
+                "subtitle":"Bạn đang được kết nối rồi ! Hãy gõ \'thoat\' để thoát"
+              }
+            ]
+          }
         }
       }
-    }
-  ]
-}';
+    ]
+  }';
 }
 mysqli_close($conn);
 ?>
