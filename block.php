@@ -4,24 +4,6 @@ $ID = $_POST['ID'];// lấy id từ chatfuel
 require_once 'config.php'; //lấy thông tin từ config
 
 $conn = mysqli_connect($DBHOST, $DBUSER, $DBPW, $DBNAME); // kết nối data
-$errorChat = '{
-     "messages": [
-    {
-      "attachment":{
-        "type":"template",
-        "payload":{
-          "template_type":"generic",
-          "elements":[
-            {
-              "title":"Lỗi !!!",
-              "subtitle":"Đã xảy ra lỗi gửi tin. Bạn gửi lại thử nhé."
-            }
-          ]
-        }
-      }
-    }
-  ]
-} ';
 //////// LẤY ID NGƯỜI CHÁT CÙNG ////////////
 function getRelationship($userid) {
   global $conn;
@@ -43,14 +25,32 @@ function request($userid,$jsondata) {
   curl_setopt($ch, CURLOPT_POSTFIELDS, $jsondata);
   curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
   curl_exec($ch);
+  $errorChat = '{
+       "messages": [
+      {
+        "attachment":{
+          "type":"template",
+          "payload":{
+            "template_type":"generic",
+            "elements":[
+              {
+                "title":"Lỗi !!!",
+                "subtitle":"Đã xảy ra lỗi gửi tin. Bạn gửi lại thử nhé."
+              }
+            ]
+          }
+        }
+      }
+    ]
+  } ';
     	if (curl_errno($ch)) {
-		echo errorChat;
+		echo $errorChat;
 	} else {
 		$resultStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 		if ($resultStatus == 200) {
 			// send ok
 		} else {
-			echo errorChat;
+			echo $errorChat;
 		}
 	}
 	curl_close($ch);
