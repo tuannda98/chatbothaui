@@ -1,25 +1,29 @@
 <?php
 	require_once 'config.php'; //lấy thông tin từ config
-	$conn = mysqli_connect($DBHOST, $DBUSER, $DBPW, $DBNAME); // kết nối data
-	$sql = "SELECT ID, trangthai, gioitinh, hangcho, ketnoi FROM users";
-	$result = mysqli_query($conn, $sql);
-	$male = 0;
-	$female = 0;
-	$connected = 0;
-	$like = 0;
-	$other = 0;
-	if (mysqli_num_rows($result) > 0) {
-		// output data of each row
-		while($row = mysqli_fetch_assoc($result)) {
-			$like++;
-			if($row['trangthai'] == 1) $connected++;
-			else {
-				if($row['gioitinh'] == 1) $male++;
-				if($row['gioitinh'] == 2) $female++;
-				if($row['gioitinh'] == 0) $other++;
-			}
-		}
-	}
+    $page = 'home';
+    if (isset($_GET['page'])) {
+        $page = $_GET['page'];
+    }
+    $conn = mysqli_connect($DBHOST, $DBUSER, $DBPW, $DBNAME); // kết nối data
+    $sql = "SELECT ID, trangthai, gioitinh, hangcho, ketnoi FROM users";
+    $result = mysqli_query($conn, $sql);
+    $male = 0;
+    $female = 0;
+    $connected = 0;
+    $like = 0;
+    $other = 0;
+    if (mysqli_num_rows($result) > 0) {
+        // output data of each row
+        while($row = mysqli_fetch_assoc($result)) {
+            $like++;
+            if($row['trangthai'] == 1) $connected++;
+            else {
+                if($row['gioitinh'] == 1) $male++;
+                if($row['gioitinh'] == 2) $female++;
+                if($row['gioitinh'] == 0) $other++;
+            }
+        }
+    }
 ?>
 <!DOCTYPE html>
 <html>
@@ -82,7 +86,7 @@
             <div class="navbar-header">
                 <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></a>
                 <a href="javascript:void(0);" class="bars"></a>
-                <a class="navbar-brand" href="index.html">Hồng Quang Chatbot</a>
+                <a class="navbar-brand" href="/">HaUI Chatbot</a>
             </div>
             
         </div>
@@ -97,10 +101,14 @@
                     <img src="images/user.jpg" width="48" height="48" alt="User" />
                 </div>
                 <div class="info-container">
-                    <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Hồng Quang ChatBot</div>
+                    <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">HAUI ChatBot</div>
                     <div class="btn-group user-helper-dropdown">
                         <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
-                        
+                        <ul class="dropdown-menu pull-right">
+                            <li><a href="https://www.facebook.com/BotChatHaui"><i class="material-icons">person</i>Fanpage</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="https://m.me/BotChatHaui"><i class="material-icons">message</i>Inbox</a></li>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -109,16 +117,31 @@
             <div class="menu">
                 <ul class="list">
                     <li class="header">MAIN NAVIGATION</li>
-                    <li class="active">
-                        <a href="index.php">
+                    <li class="<?php echo $page == 'home' ? 'active' : '' ?>">
+                        <a href='?page=home'>
                             <i class="material-icons">home</i>
                             <span>Home</span>
                         </a>
                     </li>
-                    
+                    <li class="<?php echo $page == 'users' ? 'active' : '' ?>">
+                        <a href='?page=users'>
+                            <i class="material-icons">perm_identity</i>
+                            <span>Users</span>
+                        </a>
+                    </li>
                 </ul>
             </div>
             <!-- #Menu -->
+            <!-- Footer -->
+            <div class="legal">
+                <div class="copyright">
+                    &copy; 2022 <a href="https://www.facebook.com/BotChatHaui">HAUI CHATBOT</a>.
+                </div>
+                <div class="version">
+                    <b>Version: </b> 1.0.0
+                </div>
+            </div>
+            <!-- #Footer -->
          </aside>
         <!-- #END# Left Sidebar -->
     </section>
@@ -178,72 +201,26 @@
             </div>
             <!-- #END# Widgets -->
             
+            <?php
+                if(file_exists(__DIR__.'./screens/'.$page.'.php')){
+                    require_once('./screens/'.$page.'.php');
+                }
+                else{
+                    echo "Trang bạn truy cập không tồn tại";
+                }
+            ?>
 
-            <div class="row clearfix">
-                <!-- Task Info -->
-                <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
-                    <div class="card">
-                        <div class="header">
-                            <h2>USER INFOS</h2>
-                        </div>
-                        <div class="body">
-                            <div class="table-responsive">
-                                <table class="table table-hover dashboard-task-infos">
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>UID</th>
-                                            <th>Status</th>
-											<th>UID2</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-									<?php
-									
-										$result = mysqli_query($conn, $sql);
-										if (mysqli_num_rows($result) > 0) {
-											// output data of each row
-											$id = 0;
-											while($row = mysqli_fetch_assoc($result)) {
-												if($row['hangcho'] || $row['trangthai']){
-													$id++;
-													echo '<tr><td>'.$id.'</td><td>'.$row["ID"].'</td>';
-													if($row['hangcho'])
-													{
-														if($row['gioitinh'] == 1) echo '<td><span class="label bg-blue">Waiting</span></td>';
-														if($row['gioitinh'] == 2) echo '<td><span class="label bg-pink">Waiting</span></td>';
-														if($row['gioitinh'] == 0) echo '<td><span class="label bg-black">Waiting</span></td>';
-													}
-													if($row['trangthai']) echo '<td><span class="label bg-green">Connected</span></td><td>'.$row["ketnoi"].'</td>';
-												}
-												
-											}
-										}
-									?>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- #END# Task Info -->
-                <!-- Browser Usage -->
-				
-                <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-                    <div class="card">
-                        <div class="header">
-                            <h2>STATS</h2>
-                        </div>
-                        <div class="body">
-                            <div id="donut_chart" class="dashboard-donut-chart"></div>
-							
-
-                        </div>
-                    </div>
-                </div>
-                <!-- #END# Browser Usage -->
-            </div>
-			
+			<div class="row clearfix">
+				<div id="fb-root"></div>
+				<script>(function(d, s, id) {
+				  var js, fjs = d.getElementsByTagName(s)[0];
+				  if (d.getElementById(id)) return;
+				  js = d.createElement(s); js.id = id;
+				  js.src = 'https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v3.1&appId=266578183986233&autoLogAppEvents=1';
+				  fjs.parentNode.insertBefore(js, fjs);
+				}(document, 'script', 'facebook-jssdk'));</script>
+				<div class="fb-page" data-href="https://www.facebook.com/BotChatHaui" data-width="500" data-height="500" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/BotChatHaui" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/BotChatHaui">HaUI ChatBot</a></blockquote></div>
+			</div>
         </div>
     </section>
 
@@ -281,41 +258,14 @@
 
     <!-- Sparkline Chart Plugin Js -->
     <script src="plugins/jquery-sparkline/jquery.sparkline.js"></script>
-	<script>
+    
+    <!-- Custom Js -->
+    <script src="js/admin.js"></script>
+    <script src="js/pages/index.js"></script>
 
-function initDonutChart() {
-	var total = <?php echo $like;?>;
-	var female = <?php echo round(100*$female/$like); ?>;
-	var male = <?php echo round(100*$male/$like);?>;
-	var connected = <?php echo round(100*$connected/$like);?>;
-	var other = 100 - male - female - connected;
-    Morris.Donut({
-        element: 'donut_chart',
-        data: [{
-            label: 'Female',
-            value: female
-        }, {
-            label: 'Male',
-            value: male
-        }, {
-            label: 'Connected',
-            value: connected
-        }, {
-            label: 'Other',
-            value: other
-        }],
-        colors: ['rgb(233, 30, 99)', 'rgb(0, 96, 255)', '#0BA462', 'rgb(0, 0, 0)'],
-        formatter: function (y) {
-            return y + '%'
-        }
-    });
-}
-initDonutChart();
-
-$(window).on('load',function(){
-      $('.page-loader-wrapper').remove();
-});
-</script>
+    <!-- Demo Js -->
+    <script src="js/demo.js"></script>
+	<?php echo "<script> function initDonutChart(){var total = $like;var female = Math.round(100*$female/$like);var male = Math.round(100*$male/$like);var connected = Math.round(100*$connected/$like);var other = 100 - male - female - connected;Morris.Donut({element:'donut_chart',data:[{label: 'Female',value: female},{label: 'Male',value: male},{label: 'Connected',value: connected},{label: 'Other',value: other}],colors: ['rgb(233, 30, 99)', 'rgb(0, 96, 255)', '#0BA462', 'rgb(0, 0, 0)'],formatter: function (y) {return y + '%'}});}initDonutChart();</script>;" ?>
 </body>
 
 </html>
