@@ -202,7 +202,7 @@
             <!-- #END# Widgets -->
             
             <?php
-                if(file_exists(__DIR__.'./screens/'.$page.'.php')){
+                if(file_exists('./screens/'.$page.'.php')){
                     require_once('./screens/'.$page.'.php');
                 }
                 else{
