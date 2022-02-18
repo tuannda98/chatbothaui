@@ -59,7 +59,7 @@ function request($userid,$jsondata) {
 
 function sendchat($userid,$noidung){
 global $JSON;
-$payload = '{"'.$JSON.'":"'.$noidung.'"}';
+$payload = '{"'.$JSON.'":"'.$noidung.'","chat":"off"}';
 request($userid,$payload);		
 }
 
