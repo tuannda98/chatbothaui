@@ -311,6 +311,10 @@ function initDonutChart() {
     });
 }
 initDonutChart();
+
+$(window).on('load',function(){
+      $('.page-loader-wrapper').remove();
+});
 </script>
 </body>
 
