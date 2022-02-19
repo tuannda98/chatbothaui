@@ -10,18 +10,16 @@
     $male = 0;
     $female = 0;
     $connected = 0;
-    $like = 0;
-    $other = 0;
+    $total = 0;
+    $waiting = 0;
     if (mysqli_num_rows($result) > 0) {
         // output data of each row
         while($row = mysqli_fetch_assoc($result)) {
-            $like++;
+            $total++;
             if($row['trangthai'] == 1) $connected++;
-            else {
-                if($row['gioitinh'] == 1) $male++;
-                if($row['gioitinh'] == 2) $female++;
-                if($row['gioitinh'] == 0) $other++;
-            }
+            if($row['hangcho'] == 1) $waiting++;
+            if($row['gioitinh'] == 1) $male++;
+            if($row['gioitinh'] == 2) $female++;
         }
     }
 ?>
@@ -188,13 +186,24 @@
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                    <div class="info-box bg-green hover-expand-effect">
+                        <div class="icon">
+                            <i class="material-icons">loop</i>
+                        </div>
+                        <div class="content">
+                            <div class="text">WAITING</div>
+                            <div class="number count-to" data-from="0" data-to="<?php echo $waiting;?>" data-speed="1000" data-fresh-interval="20"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                     <div class="info-box bg-orange hover-expand-effect">
                         <div class="icon">
                             <i class="material-icons">favorite</i>
                         </div>
                         <div class="content">
                             <div class="text">LIKE</div>
-                            <div class="number count-to" data-from="0" data-to="<?php echo $like; ?>" data-speed="1000" data-fresh-interval="20"></div>
+                            <div class="number count-to" data-from="0" data-to="<?php echo $total; ?>" data-speed="1000" data-fresh-interval="20"></div>
                         </div>
                     </div>
                 </div>
@@ -265,7 +274,33 @@
 
     <!-- Demo Js -->
     <script src="js/demo.js"></script>
-	<?php echo "<script> function initDonutChart(){var total = $like;var female = Math.round(100*$female/$like);var male = Math.round(100*$male/$like);var connected = Math.round(100*$connected/$like);var other = 100 - male - female - connected;Morris.Donut({element:'donut_chart',data:[{label: 'Female',value: female},{label: 'Male',value: male},{label: 'Connected',value: connected},{label: 'Other',value: other}],colors: ['rgb(233, 30, 99)', 'rgb(0, 96, 255)', '#0BA462', 'rgb(0, 0, 0)'],formatter: function (y) {return y + '%'}});}initDonutChart();</script>;" ?>
+	<?php echo "<script> function initDonutChart(){
+        var total = $total;
+        var female = Math.round(100*$female/$total);
+        var male =100 - female;
+        Morris.Donut({
+            element:'donut_chart',
+            data:[
+                {
+                    label: 'Female',
+                    value: female
+                },
+                {
+                    label: 'Male',
+                    value: male
+                }
+            ],
+            colors: [
+                'rgb(233, 30, 99)',
+                'rgb(0, 96, 255)'
+            ],
+            formatter: function (y) {
+                return y + '%'
+                }
+            });
+        }
+        initDonutChart();</script>;"
+    ?>
 </body>
 
 </html>
